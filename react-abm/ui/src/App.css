@@ -26,3 +26,14 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 3px;
+  width: 10%;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
