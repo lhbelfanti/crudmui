@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class EditUserButton extends Component {
+class EditUserButton extends React.Component {
 
     render() {
         return(

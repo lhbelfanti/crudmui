@@ -1,7 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
+import { API_ROOT } from "../config/config";
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3001/'
+    baseURL: API_ROOT
 });
 
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';

@@ -1,18 +1,21 @@
-import React, { Component } from 'react';
+import React from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { getUsers } from '../api/apiCalls';
+import { getUsers } from "../api/apiCalls";
 
-import { fetchUsers, selectUser } from '../actions/users-actions';
+import { fetchUsers, selectUser } from "../actions/users-actions";
 
-import UsersRow from './users-row';
-import AddUserButton from './add-user-button';
+import { USE_MAT_UI_TITLE, USE_MAT_UI_LIST } from "../config/config";
+
+import AddUserButton from "./add-user-button";
 import EditUserButton from "./edit-user-button";
 import DeleteUserButton from "./delete-user-button";
+import UsersTableList from "./users-table-list";
+import UsersTitle from "./users-title";
 
 
-class UsersList extends Component {
+class UsersListPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -54,40 +57,9 @@ class UsersList extends Component {
         this.props.onUsersFetched(users);
     }
 
-    onUserClicked(e, user) {
-        if (this.state.selectedUser.user !== undefined) {
-            let selectedUserHtml = this.state.selectedUser.htmlItem;
-            let selectedUser = this.state.selectedUser.user;
-
-            if (selectedUser.id === user.id) {
-                let color = selectedUserHtml.style.color === 'red' ? 'black' : 'red';
-                selectedUserHtml.style.color = color;
-                e.currentTarget.style.color = color;
-            }
-            else
-            {
-                selectedUserHtml.style.color = 'black';
-                e.currentTarget.style.color = 'red';
-            }
-        }
-        else
-            e.currentTarget.style.color = 'red';
-
-
-        if (e.currentTarget.style.color === 'black') {
-            this.setDefaultSelectedUserState();
-            this.props.onUserSelected(undefined);
-        }
-        else {
-            this.setState({
-                selectedUser: {
-                    htmlItem: e.currentTarget,
-                    user: user
-                }
-            });
-
-            this.props.onUserSelected(user);
-        }
+    onUserClicked(user, selectedUser) {
+        this.setState({selectedUser: selectedUser});
+        this.props.onUserSelected(user);
     }
 
     onAddUserClicked() {
@@ -104,20 +76,8 @@ class UsersList extends Component {
 
         return(
             <div>
-                <h2>List of users:</h2>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Name</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Gender</th>
-                        </tr>
-                        {this.state.users.map((u, index) =>
-                            <UsersRow key={index} user={u} onClick={ this.onUserClicked }/>
-                        )}
-                    </tbody>
-                </table>
+                <UsersTitle title={"List of users:"}/>
+                <UsersTableList users={this.state.users} onClick={ this.onUserClicked }/>
                 <div>
                     <AddUserButton history={this.props.history} onClick={ this.onAddUserClicked }/>
                     <EditUserButton history={this.props.history} btnDisabled={this.state.selectedUser.user === undefined}/>
@@ -143,4 +103,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersListPage);

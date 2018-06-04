@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from "react";
 
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 
-import UsersList from './users-list';
-import UsersForm from './users-form';
+import UsersList from "./users-list-page";
+import UsersForm from "./users-form-page";
 
-class Main extends Component {
+class Main extends React.Component {
 
     render() {
         return(

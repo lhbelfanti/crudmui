@@ -1,0 +1,9 @@
+export const API_ROOT = "http://localhost:3001/";
+export const USE_MAT_UI_TITLE = false;
+export const USE_MAT_UI_LIST = false;
+export const USE_MAT_UI_ADD_BTN = false;
+export const USE_MAT_UI_EDIT_BTN = false;
+export const USE_MAT_UI_DELETE_BTN = false;
+export const USE_MAT_UI_FORM = false;
+export const USE_MAT_UI_SUBMIT_BTN = false;
+export const USE_MAT_UI_CANCEL_BTN = false;

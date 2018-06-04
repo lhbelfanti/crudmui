@@ -1,4 +1,4 @@
-import Axios from './axiosModule'
+import Axios from "./axiosModule";
 
 //------- Llamadas a la API -------
 
