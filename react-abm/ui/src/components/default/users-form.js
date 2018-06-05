@@ -52,13 +52,12 @@ class UsersForm extends React.Component {
                 </div>
                 <br></br>
                 <button type="button"
-                        onClick={ this.onSubmitClicked } >
-                    Submit
-                </button>
-
-                <button type="button"
                         onClick={() => { console.log('Canceled...'); this.props.history.push('/');}} >
                     Cancel
+                </button>
+                <button type="button"
+                        onClick={ this.onSubmitClicked } >
+                    Submit
                 </button>
             </div>
        );

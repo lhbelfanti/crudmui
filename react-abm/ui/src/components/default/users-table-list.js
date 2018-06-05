@@ -1,6 +1,9 @@
 import React from "react";
 
+import EditUserButton from "./edit-user-button";
+import DeleteUserButton from "./delete-user-button";
 import UsersRow from "./users-row";
+
 
 class UsersTableList extends React.Component {
 
@@ -52,20 +55,36 @@ class UsersTableList extends React.Component {
     }
 
     render() {
+
+        const style = {
+            th: {
+                border: "1px solid #dddddd",
+                textAlign: "left",
+                padding: "3px",
+                width: "10%"
+            }
+        };
+
         return (
-            <table>
-                <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Gender</th>
-                </tr>
-                {this.state.users.map((u, index) =>
-                    <UsersRow key={index} user={u} onClick={ this.onUserClicked }/>
-                )}
-                </tbody>
-            </table>
+            <div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th style={style.th}>Name</th>
+                        <th style={style.th}>Username</th>
+                        <th style={style.th}>Email</th>
+                        <th style={style.th}>Gender</th>
+                    </tr>
+                    {this.state.users.map((u, index) =>
+                        <UsersRow key={index} user={u} onClick={ this.onUserClicked }/>
+                    )}
+                    </tbody>
+                </table>
+                <div>
+                    <EditUserButton history={this.props.history} btnDisabled={this.props.btnDisabled}/>
+                    <DeleteUserButton btnDisabled={this.props.btnDisabled}/>
+                </div>
+            </div>
         );
     }
 }

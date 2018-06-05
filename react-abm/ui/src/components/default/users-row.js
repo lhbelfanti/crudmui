@@ -24,15 +24,26 @@ class UsersRow extends React.Component {
     }
 
     render() {
+        const style = {
+            td: {
+                border: "1px solid #dddddd",
+                justifyContent: "left",
+                padding: "3px",
+                width: "10%"
+            }
+        };
+
         return (
             <tr onClick={ this.rowClicked }>
-                <td>{this.state.user.name}</td>
-                <td>{this.state.user.username}</td>
-                <td>{this.state.user.email}</td>
-                <td>{this.state.user.gender}</td>
+                <td style={style.td}>{this.state.user.name}</td>
+                <td style={style.td}>{this.state.user.username}</td>
+                <td style={style.td}>{this.state.user.email}</td>
+                <td style={style.td}>{this.state.user.gender}</td>
             </tr>
         );
     }
 }
+
+
 
 export default UsersRow;

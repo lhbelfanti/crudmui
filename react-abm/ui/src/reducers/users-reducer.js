@@ -15,6 +15,8 @@ export default function usersReducer(state = initialState, action) {
 
         case 'SELECT_USER':
             state.selectedUser = action.payload;
+            if (action.history !== undefined)
+                action.history.push('/form');
             return state;
 
         case 'ADD_USER':

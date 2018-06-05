@@ -3,8 +3,16 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { addUser, updateUser } from "../actions/users-actions";
-import UsersTitle from "./users-title";
-import UsersForm from "./users-form";
+
+import {USE_MAT_UI_TITLE, USE_MAT_UI_FORM} from "../config/config";
+
+//Default components
+import UsersTitle from "./default/users-title";
+import UsersForm from "./default/users-form";
+
+//Material UI components
+import MaterialUIAppBar from "./materialUI/material-ui-app-bar";
+import MaterialUIUsersForm from "./materialUI/material-ui-users-form";
 
 class UsersFormPage extends React.Component {
 
@@ -32,10 +40,10 @@ class UsersFormPage extends React.Component {
 
     componentDidMount() {
         if (this.props.users.selectedUser !== undefined) {
-            this.setState({user: this.props.users.selectedUser, isEditing: true, titleText: "Edit user: "});
+            this.setState({user: this.props.users.selectedUser, isEditing: true, titleText: "Edit user"});
         }
         else {
-            this.setState({titleText: "Add new user:"});
+            this.setState({titleText: "Add new user"});
         }
     }
 
@@ -66,10 +74,34 @@ class UsersFormPage extends React.Component {
 
     render() {
 
+        // Title component
+        let formDivStyle = {paddingTop: "0px"};
+        let titleComponent = (<UsersTitle title={this.state.titleText}/>);
+
+        if (USE_MAT_UI_TITLE) {
+            formDivStyle = {paddingTop: "80px"};
+            titleComponent = (<MaterialUIAppBar title={this.state.titleText}/>);
+        }
+
+        // Form component
+        let formComponent = (<UsersForm user={this.state.user}
+                                        onSubmitClicked={this.onSubmitClicked}
+                                        modifyUser={this.modifyUser}
+                                        history={this.props.history}/>);
+        if (USE_MAT_UI_FORM)
+        {
+            formComponent = (<MaterialUIUsersForm user={this.state.user}
+                                        onSubmitClicked={this.onSubmitClicked}
+                                        modifyUser={this.modifyUser}
+                                        history={this.props.history}/>);
+        }
+
         return(
             <div>
-                <UsersTitle title={this.state.titleText}/>
-                <UsersForm user={this.state.user} onSubmitClicked={this.onSubmitClicked} modifyUser={this.modifyUser}/>
+                {titleComponent}
+                <div style={formDivStyle}>
+                    {formComponent}
+                </div>
             </div>
         );
     }

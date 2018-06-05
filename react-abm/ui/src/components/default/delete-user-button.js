@@ -2,12 +2,13 @@ import React from "react";
 
 import { connect } from "react-redux";
 
-import { deleteUser } from "../actions/users-actions";
+import { deleteUser } from "../../actions/users-actions";
 
 class DeleteUserButton extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.onConfirm = this.onConfirm.bind(this);
     }
 

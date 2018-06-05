@@ -5,10 +5,11 @@ export function fetchUsers(users) {
     }
 }
 
-export function selectUser(user) {
+export function selectUser(user, history) {
     return {
         type: 'SELECT_USER',
-        payload: user
+        payload: user,
+        history: history
     }
 }
 

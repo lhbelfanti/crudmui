@@ -6,13 +6,17 @@ import { getUsers } from "../api/apiCalls";
 
 import { fetchUsers, selectUser } from "../actions/users-actions";
 
-import { USE_MAT_UI_TITLE, USE_MAT_UI_LIST } from "../config/config";
+import { USE_MAT_UI_TITLE, USE_MAT_UI_LIST, USE_MAT_UI_ADD_BTN } from "../config/config";
 
-import AddUserButton from "./add-user-button";
-import EditUserButton from "./edit-user-button";
-import DeleteUserButton from "./delete-user-button";
-import UsersTableList from "./users-table-list";
-import UsersTitle from "./users-title";
+//Default components
+import UsersTableList from "./default/users-table-list";
+import UsersTitle from "./default/users-title";
+import AddUserButton from "./default/add-user-button";
+
+//Material UI components
+import MaterialUIAppBar from "./materialUI/material-ui-app-bar";
+import MaterialUIUsersList from "./materialUI/material-ui-users-list";
+import MaterialUIAddUserButton from "./materialUI/material-ui-add-user-button"
 
 
 class UsersListPage extends React.Component {
@@ -31,6 +35,8 @@ class UsersListPage extends React.Component {
         this.dataFetched = this.dataFetched.bind(this);
         this.onUserClicked = this.onUserClicked.bind(this);
         this.onAddUserClicked = this.onAddUserClicked.bind(this);
+        this.onEditUserClicked = this.onEditUserClicked.bind(this);
+        this.onDeleteUserClicked = this.onDeleteUserClicked.bind(this);
     }
 
     setDefaultSelectedUserState() {
@@ -59,7 +65,7 @@ class UsersListPage extends React.Component {
 
     onUserClicked(user, selectedUser) {
         this.setState({selectedUser: selectedUser});
-        this.props.onUserSelected(user);
+        this.props.onUserSelected(user, undefined);
     }
 
     onAddUserClicked() {
@@ -67,22 +73,69 @@ class UsersListPage extends React.Component {
         this.setDefaultSelectedUserState()
     }
 
+    //Material UI specific functions
+    onEditUserClicked(user, selectedUser) {
+        this.setState({selectedUser: selectedUser});
+        this.props.onUserSelected(user, this.props.history);
+    }
+
+    onDeleteUserClicked(user, selectedUser) {
+        this.setState({selectedUser: selectedUser});
+        this.props.onUserSelected(user, undefined);
+    }
+
     render() {
+
+        let loading = (<h4>Fetching data...</h4>);
+        if (USE_MAT_UI_TITLE) {
+            loading = (<MaterialUIAppBar title={"Users"}/>);
+        }
 
         if (this.state.users === undefined)
             return (
-                <h4>Fetching data...</h4>
+                <div>
+                    {loading}
+                </div>
             );
+
+        // Title component
+        let tableDivStyle = {paddingTop: "0px"};
+        let titleComponent = (<UsersTitle title={"Users list"}/>);
+
+        if (USE_MAT_UI_TITLE) {
+            tableDivStyle = {paddingTop: "80px"};
+            titleComponent = (<MaterialUIAppBar title={"Users list"}/>);
+        }
+
+        // List component
+        let listComponent = (<UsersTableList users={this.state.users}
+                                             onClick={ this.onUserClicked }
+                                             history={this.props.history}
+                                             btnDisabled={this.state.selectedUser.user === undefined}/>);
+        if (USE_MAT_UI_LIST) {
+            listComponent = (<MaterialUIUsersList users={this.state.users}
+                                                  history={this.props.history}
+                                                  onEditUserClicked={this.onEditUserClicked}
+                                                  onDeleteUserClicked={this.onDeleteUserClicked}/>);
+        }
+
+        //Add user component
+        let addUserComponent = (<AddUserButton history={this.props.history}
+                                               onClick={ this.onAddUserClicked }/>);
+        if (USE_MAT_UI_ADD_BTN) {
+            addUserComponent = (<MaterialUIAddUserButton history={this.props.history}
+                                                         onClick={ this.onAddUserClicked }/>)
+        }
 
         return(
             <div>
-                <UsersTitle title={"List of users:"}/>
-                <UsersTableList users={this.state.users} onClick={ this.onUserClicked }/>
                 <div>
-                    <AddUserButton history={this.props.history} onClick={ this.onAddUserClicked }/>
-                    <EditUserButton history={this.props.history} btnDisabled={this.state.selectedUser.user === undefined}/>
-                    <DeleteUserButton btnDisabled={this.state.selectedUser.user === undefined}/>
+                    {titleComponent}
                 </div>
+                <div style={tableDivStyle}>
+                    {listComponent}
+                </div>
+                {addUserComponent}
             </div>
         );
     }
@@ -99,7 +152,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         onUsersFetched: (users) => dispatch(fetchUsers(users)),
-        onUserSelected: (user) => dispatch(selectUser(user))
+        onUserSelected: (user, history) => dispatch(selectUser(user, history))
     };
 }
 
