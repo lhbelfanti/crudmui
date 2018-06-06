@@ -9,7 +9,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Mail from "@material-ui/icons/Mail";
 import Face from "@material-ui/icons/Face";
 import Spellcheck from "@material-ui/icons/Spellcheck";
-import Button from "@material-ui/core/Button";
+import CustomButton from "./custom/material-ui-custom-button"
 
 
 class MaterialUIUsersForm extends React.Component {
@@ -31,6 +31,7 @@ class MaterialUIUsersForm extends React.Component {
     }
 
     render() {
+
         const CustomPaper = withStyles(theme => ({
             root: {
                 margin: "0 auto",
@@ -46,14 +47,6 @@ class MaterialUIUsersForm extends React.Component {
                 width: 200
             }
         }))(TextField);
-
-        const CustomButton = withStyles(theme => ({
-            root: {
-                marginLeft: 10,
-                marginRight: 10,
-                marginTop: 30
-            }
-        }))(Button);
 
         const iconStyle = {
             marginTop: 10,
@@ -113,16 +106,12 @@ class MaterialUIUsersForm extends React.Component {
                         </Grid>
                     </Grid>
                     <div style={buttonsDivStyle}>
-                        <CustomButton
-                                color="secondary"
-                                onClick={() => { console.log('Canceled...'); this.props.history.push('/');}} >
-                            Cancel
-                        </CustomButton>
-                        <CustomButton variant="contained"
-                                color="primary"
-                                onClick={ this.onSubmitClicked } >
-                            Submit
-                        </CustomButton>
+
+                        <CustomButton color="secondary" text="Cancel"
+                                onClick={() => { console.log('Canceled...'); this.props.history.push('/');}}/>
+
+                        <CustomButton variant="contained" color="primary" text="Submit"
+                                onClick={ this.onSubmitClicked }/>
                     </div>
                 </CustomPaper>
             </div>

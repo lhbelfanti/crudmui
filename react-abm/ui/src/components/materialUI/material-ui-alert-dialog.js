@@ -44,7 +44,7 @@ class MaterialUIAlertDialog extends React.Component {
                     open={this.props.openAlertDialog}
                     TransitionComponent={Transition}
                     keepMounted
-                    onClose={this.handleClose}
+                    onClose={this.onAlertDialogClose}
                     aria-labelledby="alert-dialog-slide-title"
                     aria-describedby="alert-dialog-slide-description">
                     <DialogTitle id="alert-dialog-slide-title">
@@ -74,7 +74,7 @@ function mapStateToProps(state) {
 //Mapeo las funciones a una acción específica
 function mapDispatchToProps(dispatch) {
     return {
-        onUserDeleted: (users) => dispatch(deleteUser(users))
+        onUserDeleted: (user) => dispatch(deleteUser(user))
     };
 }
 

@@ -75,12 +75,10 @@ class UsersListPage extends React.Component {
 
     //Material UI specific functions
     onEditUserClicked(user, selectedUser) {
-        this.setState({selectedUser: selectedUser});
         this.props.onUserSelected(user, this.props.history);
     }
 
     onDeleteUserClicked(user, selectedUser) {
-        this.setState({selectedUser: selectedUser});
         this.props.onUserSelected(user, undefined);
     }
 

@@ -38,8 +38,8 @@ class MaterialUIUsersRow extends React.Component {
 
     //Fix it
     onDeleteUserClicked(e) {
-        this.setState({openAlertDialog: true}, function() {console.log(this.state.openAlertDialog)});
         this.state.onDeleteUserClicked(e, this.state.user);
+        this.setState({openAlertDialog: true});
     }
 
     onAlertDialogClose() {
